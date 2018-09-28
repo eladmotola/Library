@@ -1,0 +1,32 @@
+﻿.form-horizontal  {
+    width: 800px;
+    margin: 0 auto;
+}
+
+.FormContent {
+    width: max-content;
+    margin: 0 auto;
+    text-align:center;
+}
+
+.FormContent .form-actions  {
+    display:flex;
+    justify-content:space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.dl-horizontal dt {
+    margin-top: 5px;
+    text-align: left;
+}
+
+.dl-horizontal dd {
+    text-align: right;
+}
+
+h4 {
+    font-size: 24pt;
+    font-weight: bold;
+    text-decoration: underline;
+}

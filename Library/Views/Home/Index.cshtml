@@ -2,30 +2,45 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<script type="text/javascript" src="https://www.google.com/books/jsapi.js"></script>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+@*<div class="FBLoginButton">
+        Login!
+    </div>*@
+
+<section id="FBPosts"></section>
+<br /><br />
+<section id="VideoSection">
+    <video width="640" height="360" id="player1" controls>
+        <source src="~/Content/video/vid.mp4" type="video/mp4" />
+    </video>
+</section>
+<br /><br />
+<section id="RecommendedBook">
+    <p>Recommended book of the month</p>
+    <div id="viewerCanvas" style="width: 700px; height: 700px"></div>
+</section>
+
+<script type="text/javascript">
+    google.books.load();
+
+    function initialize() {
+        var viewer = new google.books.DefaultViewer(document.getElementById('viewerCanvas'));
+        viewer.load('ISBN:1576906388');
+    }
+
+    google.books.setOnLoadCallback(initialize);
+
+    (function () {
+        $(".FBLoginButton").click(function () {
+            FB.getLoginStatus(function (response) {
+                if (response.status != 'connected') {
+                    FB.login();
+                }
+                else {
+                    alert("Conntected");
+                }
+            });
+        });
+    })();
+</script>
