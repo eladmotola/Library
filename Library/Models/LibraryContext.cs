@@ -24,5 +24,7 @@ namespace Library.Models
         public System.Data.Entity.DbSet<Library.Models.Genre> Genres { get; set; }
 
         public System.Data.Entity.DbSet<Library.Models.Customer> Customers { get; set; }
+
+        public System.Data.Entity.DbSet<Library.Models.Loan> Loans { get; set; }
     }
 }
