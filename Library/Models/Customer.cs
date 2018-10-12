@@ -9,7 +9,7 @@ namespace Library.Models
         [Display(Name = "Id")]
         public int Id { get; set; }
         [Required]
-        [Display(Name = "Personal Id")]
+        [Display(Name = "Customer Personal Id")]
         public string PersonalID { get; set; }
         [Required]
         [Display(Name = "First Name")]

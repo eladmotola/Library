@@ -40,7 +40,7 @@ namespace Library.Controllers
         public ActionResult Create()
         {
             ViewBag.BookId = new SelectList(db.Books, "Id", "Name");
-            ViewBag.CustomerId = new SelectList(db.Customers, "Id", "FirstName");
+            ViewBag.CustomerId = new SelectList(db.Customers, "Id", "PersonalId");
             return View();
         }
 
@@ -66,7 +66,7 @@ namespace Library.Controllers
             }
 
             ViewBag.BookId = new SelectList(db.Books, "Id", "Name", loan.BookId);
-            ViewBag.CustomerId = new SelectList(db.Customers, "Id", "FirstName", loan.CustomerId);
+            ViewBag.CustomerId = new SelectList(db.Customers, "Id", "PersonalId", loan.CustomerId);
             return View(loan);
         }
 
