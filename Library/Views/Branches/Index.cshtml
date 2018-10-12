@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Library.Models.Branch>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h4 style="margin-bottom:10px">Library branches</h4>
+<div id="myMap" style="position:absolute;width:750px;height:500px;left:25%"></div>
+
+<script type='text/javascript'>
+    var map;
+    function initMap() {
+        map = new Microsoft.Maps.Map('#myMap', {});
+
+        $.get("/Branches/GetBranches", function (data) {
+            var branches = JSON.parse(data);
+
+            for (var i = 0; i < branches.length; i++) {
+                var center = { latitude: branches[i].lat, longitude: branches[i].lng }
+
+                //Create custom Pushpin
+                var pin = new Microsoft.Maps.Pushpin(center, {
+                    title: branches[i].Address + " Library",
+                });
+
+                //Add the pushpin to the map
+                map.entities.push(pin);
+            }
+        });
+    }
+</script>
+<script src='http://www.bing.com/api/maps/mapcontrol?callback=initMap&key=AtZY06FRanrtJxDGTeSGzu9caUxK_71IL6tLRm73FZOz8X5nTXkNoKOngnpl--xs' async defer></script>
