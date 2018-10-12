@@ -8,6 +8,7 @@ namespace Library.Models
     {
         [Key]
         public int Id { get; set; }
+        [Display(Name = "Book Name")]
         [Required]
         public string Name { get; set; }
         [Required]
