@@ -1,51 +1,57 @@
 ﻿@model IEnumerable<Library.Models.Book>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Books";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<table class="table table-striped table-hover">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Genre.Name)
+        <th class="center" style="font-weight:bold">
+            @Html.DisplayNameFor(model => model.Id)
         </th>
-        <th>
+        <th class="center" style="font-weight:bold">
             @Html.DisplayNameFor(model => model.Name)
         </th>
-        <th>
+        <th class="center" style="font-weight:bold">
             @Html.DisplayNameFor(model => model.Author)
         </th>
-        <th>
+        <th class="center" style="font-weight:bold">
             @Html.DisplayNameFor(model => model.ReleaseDate)
+        </th>
+        <th class="center" style="font-weight:bold">
+            @Html.DisplayNameFor(model => model.Genre)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Genre.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Author)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ReleaseDate)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td class="center">
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td class="center">
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td class="center">
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td class="center">
+                @Html.DisplayFor(modelItem => item.ReleaseDate)
+            </td>
+            <td class="center">
+                @Html.DisplayFor(modelItem => item.Genre.Name)
+            </td>
+            <td class="center">
+                @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "glyphicon glyphicon-pencil Icon" })
+                @*@Html.ActionLink(" ", "Details", new { id = item.Id }, new { @class = "glyphicon glyphicon-list-alt Icon" })*@
+                @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "glyphicon glyphicon-trash Icon" })
+            </td>
+        </tr>
+    }
 
 </table>
+
+<span style="font-size:20px">
+    @Html.ActionLink(" ", "Create", "", new { @class = "glyphicon glyphicon-plus Icon" })
+</span>

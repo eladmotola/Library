@@ -1,6 +1,6 @@
-﻿.form-horizontal  {
-    width: 800px;
-    margin: 0 auto;
+﻿.form-horizontal {
+    justify-content: center;
+    display: grid;
 }
 
 .FormContent {
@@ -28,5 +28,5 @@
 h4 {
     font-size: 24pt;
     font-weight: bold;
-    text-decoration: underline;
+    text-align:center;
 }
