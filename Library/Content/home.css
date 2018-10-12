@@ -2,8 +2,8 @@
     margin: 0 auto;
     width: fit-content;
     text-align:center;
-}
-.FBLoginButton {
+    }
+    .FBLoginButton {
     background-color: rgb(54, 112, 255);
     width: 90px;
     border-radius: 7px;

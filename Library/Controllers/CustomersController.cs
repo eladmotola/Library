@@ -132,12 +132,12 @@ namespace Library.Controllers
 
             if (FamilyName != string.Empty)
             {
-                customers = customers.Where(customer => customer.FamilyName.ToUpper().Contains(FamilyName));
+                customers = customers.Where(customer => customer.FamilyName.ToUpper().Contains(FamilyName.ToUpper()));
             }
 
             if (Age != string.Empty && int.TryParse(Age, out int age))
             {
-                customers = customers.Where(customer => Math.Round((double)DateTime.Now.Subtract(customer.Birthday).Days / 365) == age);
+                customers = customers.Where(customer => Math.Floor((double)DateTime.Now.Subtract(customer.Birthday).Days / 365) == age);
             }
 
             return View("Index", customers);
