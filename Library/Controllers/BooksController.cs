@@ -17,8 +17,15 @@ namespace Library.Controllers
         // GET: Books
         public ActionResult Index()
         {
-            var books = db.Books.Include(b => b.Genre);
-            return View(books.ToList());
+            var genres = new SelectList(db.Genres, "Name", "Name");
+            List<SelectListItem> genresList = new List<SelectListItem>();
+            genresList.Add(new SelectListItem { Text = "", Value = "" });
+            foreach (var item in genres)
+            {
+                genresList.Add(item);
+            }
+            ViewBag.GenreId = genresList;
+            return View(db.Books.Include(b => b.Genre).ToList());
         }
 
         // GET: Books/Details/5
@@ -28,7 +35,7 @@ namespace Library.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Book book = db.Books.Find(id);
+            Book book = db.Books.Where(x => x.Id == id).Include(x => x.Genre).FirstOrDefault();
             if (book == null)
             {
                 return HttpNotFound();
@@ -101,7 +108,7 @@ namespace Library.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Book book = db.Books.Find(id);
+            Book book = db.Books.Where(x => x.Id == id).Include(x => x.Genre).FirstOrDefault();
             if (book == null)
             {
                 return HttpNotFound();
@@ -118,6 +125,47 @@ namespace Library.Controllers
             db.Books.Remove(book);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult Search(string Id, string BookName, string Author, string GenreId, DateTime? ReleaseDate)
+        {
+            var genres = new SelectList(db.Genres, "Name", "Name");
+            List<SelectListItem> genresList = new List<SelectListItem>();
+            genresList.Add(new SelectListItem { Text = "", Value = "" });
+            foreach (var item in genres)
+            {
+                genresList.Add(item);
+            }
+            ViewBag.GenreId = genresList;
+            IEnumerable<Book> books = db.Books.Include(b => b.Genre);
+
+            if (Id != string.Empty)
+            {
+                books = books.Where(book => book.Id.ToString() == Id);
+            }
+
+            if (BookName != string.Empty)
+            {
+                books = books.Where(book => book.Name == BookName);
+            }
+
+            if (Author != string.Empty)
+            {
+                books = books.Where(book => book.Author == Author);
+            }
+
+            if (GenreId != string.Empty)
+            {
+                books = books.Where(book => book.Genre.Name == GenreId);
+            }
+
+            if (ReleaseDate.HasValue)
+            {
+                books = books.Where(book => book.ReleaseDate.Equals(ReleaseDate));
+            }
+
+            return View("Index", books);
         }
 
         protected override void Dispose(bool disposing)
