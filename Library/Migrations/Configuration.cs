@@ -19,6 +19,16 @@ namespace Library.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
+            //Genre addGenre = new Genre();
+            //addGenre.Id = 3;
+            //addGenre.Name = "Comedy";
+            //context.Genres.Add(addGenre);
+            //addGenre.Id = 2;
+            //addGenre.Name = "Comedy";
+            //context.Genres.Add(addGenre);
+            //addGenre.Id = 1;
+            //addGenre.Name = "Horror";
+            //context.Genres.Add(addGenre);
 
             context.Branches.AddOrUpdate(new Models.Branch()
             {

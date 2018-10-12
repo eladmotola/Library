@@ -28,7 +28,7 @@ namespace Library.Models
         [Display(Name = "Address")]
         public string Address { get; set; }
         [Required]
-        [Display(Name = "Genre")]
+        [Display(Name = "Gender")]
         public string Gender { get; set; }
         [Required]
         [Display(Name = "Birthday")]
