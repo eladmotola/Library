@@ -29,6 +29,28 @@ namespace Library.Migrations
             //addGenre.Id = 1;
             //addGenre.Name = "Horror";
             //context.Genres.Add(addGenre);
+
+            context.Branches.AddOrUpdate(new Models.Branch()
+            {
+                Id = 1,
+                Address = "Raanana",
+                lat = 32.18489140558821,
+                lng = 34.87343421596455
+            });
+            context.Branches.AddOrUpdate(new Models.Branch()
+            {
+                Id = 2,
+                Address = "Rehovot",
+                lat = 31.897669361644866,
+                lng = 34.813842901551524
+            });
+            context.Branches.AddOrUpdate(new Models.Branch()
+            {
+                Id = 3,
+                Address = "Ganei Tikva",
+                lat = 32.06244122293621,
+                lng = 34.87091187713511
+            });
         }
     }
 }
