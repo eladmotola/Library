@@ -115,6 +115,34 @@ namespace Library.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public ActionResult Search(string PersonalID, string FirstName, string FamilyName, string Age)
+        {
+            IEnumerable<Customer> customers = db.Customers;
+
+            if (PersonalID != string.Empty)
+            {
+                customers = customers.Where(customer => customer.PersonalID.ToString().ToUpper().Contains(PersonalID.ToUpper()));
+            }
+
+            if (FirstName != string.Empty)
+            {
+                customers = customers.Where(customer => customer.FirstName.ToUpper().Contains(FirstName.ToUpper()));
+            }
+
+            if (FamilyName != string.Empty)
+            {
+                customers = customers.Where(customer => customer.FamilyName.ToUpper().Contains(FamilyName));
+            }
+
+            if (Age != string.Empty && int.TryParse(Age, out int age))
+            {
+                customers = customers.Where(customer => Math.Round((double)DateTime.Now.Subtract(customer.Birthday).Days / 365) == age);
+            }
+
+            return View("Index", customers);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
