@@ -16,3 +16,7 @@
     column-rule-style: solid;
     column-rule-width: 1px;
 }
+
+#home canvas{
+    border-radius:5px
+}
