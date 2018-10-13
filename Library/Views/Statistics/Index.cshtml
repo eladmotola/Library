@@ -17,107 +17,199 @@
     }
 
     .bar {
-        fill: steelblue;
+        fill: #ff7e5f;
     }
 
         .bar:hover {
-            fill: brown;
+            fill: #f5ab99;
+        }
+
+    .bar2 {
+        fill: #2a93d5;
+    }
+
+        .bar2:hover {
+            fill: #AED9DA;
         }
 
     .axis--x path {
         display: none;
     }
+
+    .h5 {
+        font-size: 26px;
+        font-weight: 600;
+    }
 </style>
-<svg id="pie" width="960" height="500"></svg>
-<svg id="bar" width="960" height="500"></svg>
+<div class="row">
+    <div class="col-md-4">
+        <center>
+            <h5 class="h5">Loans Per Book</h5>
+        </center>
+        <svg id="bar" width="450" height="500"></svg>
+    </div>
+    <div class="col-md-4">
+        <center>
+            <h5 class="h5">Books by Genre</h5>
+        </center>
+        <svg id="pie" width="450" height="500"></svg>
+    </div>
+    <div class="col-md-4">
+        <center>
+            <h5 class="h5">Loans Per Customer</h5>
+        </center>
+        <svg id="bar2" width="450" height="500"></svg>
+    </div>
+</div>
+
+<a class="twitter-share-button"
+   href="https://twitter.com/intent/tweet?text=Hello%20world"
+   data-size="large">
+    Tweet
+</a>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
-(function () {
-var svg = d3.select("#pie"),
-    width = +svg.attr("width"),
-    height = +svg.attr("height"),
-    radius = Math.min(width, height) / 2,
-    g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+    (function () {
+        var svg = d3.select("#pie"),
+            width = +svg.attr("width"),
+            height = +svg.attr("height"),
+            radius = Math.min(width, height) / 2,
+            g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-var color = d3.scaleOrdinal(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+        var color = d3.scaleOrdinal(["#72a6c5", "#f9975e", "#f6d966", "#ea75ac", "#73e3ab", "#d896ff", "#ff5656"]);
 
-var pie = d3.pie()
-    .sort(null)
-    .value(function(d) { return d.BookCount; });
+        var pie = d3.pie()
+            .sort(null)
+            .value(function (d) { return d.BookCount; });
 
-var path = d3.arc()
-    .outerRadius(radius - 10)
-    .innerRadius(0);
+        var path = d3.arc()
+            .outerRadius(radius - 10)
+            .innerRadius(0);
 
-var label = d3.arc()
-    .outerRadius(radius - 40)
-    .innerRadius(radius - 40);
+        var label = d3.arc()
+            .outerRadius(radius - 60)
+            .innerRadius(radius - 60);
+
+        $.ajax({
+            url: "getBooksByGenre", success: function (result) {
+                var data = JSON.parse(result);
+
+                var arc = g.selectAll(".arc")
+                    .data(pie(data))
+                    .enter().append("g")
+                    .attr("class", "arc");
+
+                arc.append("path")
+                    .attr("d", path)
+                    .attr("fill", function (d) { return color(d.data.Genre); });
+
+                arc.append("text")
+                    .attr("transform", function (d) { return "translate(" + label.centroid(d) + ")"; })
+                    .attr("dy", "0.35em")
+                    .attr("style", "font-size:18px")
+                    .text(function (d) {
+                        return (d.data.Genre + " - " + d.data.BookCount);
+                    });
+            }
+        });
+    })();
+
+    (function () {
+        var svg = d3.select("#bar"),
+            margin = { top: 20, right: 20, bottom: 30, left: 40 },
+            width = +svg.attr("width") - margin.left - margin.right,
+            height = +svg.attr("height") - margin.top - margin.bottom;
+
+        var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
+            y = d3.scaleLinear().rangeRound([height, 0]);
+
+        var g = svg.append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
-$.ajax({
-    url: "getBooksByGenre", success: function (result) {
-        var data = JSON.parse(result);
+        $.ajax({
+            url: "getNumberOfBookLoans", success: function (result) {
+                var data = JSON.parse(result);
 
-        var arc = g.selectAll(".arc")
-          .data(pie(data))
-          .enter().append("g")
-            .attr("class", "arc");
+                x.domain(data.map(function (d) { return d.Book; }));
+                y.domain([0, d3.max(data, function (d) { return d.LoanCount; })]);
 
-        arc.append("path")
-            .attr("d", path)
-            .attr("fill", function (d) { return color(d.data.Genre); });
+                g.append("g")
+                    .attr("class", "axis axis--x")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(d3.axisBottom(x));
 
-        arc.append("text")
-            .attr("transform", function (d) { return "translate(" + label.centroid(d) + ")"; })
-            .attr("dy", "0.35em")
-            .text(function (d) { return d.data.Genre; });
-    }
-});
-})();
+                g.append("g")
+                    .attr("class", "axis axis--y")
+                    .call(d3.axisLeft(y).tickValues(d3.range(0, 10, 1)))
+                    .append("text")
+                    .attr("transform", "rotate(-90)")
+                    .attr("y", 6)
+                    .attr("dy", "0.71em")
+                    .attr("text-anchor", "end")
+                    .text("LoanCount");
 
-(function() {
-var svg = d3.select("#bar"),
-    margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = +svg.attr("width") - margin.left - margin.right,
-    height = +svg.attr("height") - margin.top - margin.bottom;
+                g.selectAll(".bar")
+                    .data(data)
+                    .enter().append("rect")
+                    .attr("class", "bar")
+                    .attr("x", function (d) { return x(d.Book); })
+                    .attr("y", function (d) { return y(d.LoanCount); })
+                    .attr("width", x.bandwidth())
+                    .attr("height", function (d) { return height - y(d.LoanCount); });
 
-var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
-    y = d3.scaleLinear().rangeRound([height, 0]);
 
-var g = svg.append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            }
+        });
+    })();
 
-$.ajax({
-    url: "getNumberOfBookLoans", success: function (result) {
-        var data = JSON.parse(result);
+    (function () {
+        var svg = d3.select("#bar2"),
+            margin = { top: 20, right: 20, bottom: 30, left: 40 },
+            width = +svg.attr("width") - margin.left - margin.right,
+            height = +svg.attr("height") - margin.top - margin.bottom;
 
-        x.domain(data.map(function(d) { return d.Book; }));
-        y.domain([0, d3.max(data, function(d) { return d.LoanCount; })]);
+        var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
+            y = d3.scaleLinear().rangeRound([height, 0]);
 
-        g.append("g")
-            .attr("class", "axis axis--x")
-            .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x));
+        var g = svg.append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        g.append("g")
-            .attr("class", "axis axis--y")
-            .call(d3.axisLeft(y).ticks(10, "%"))
-        .append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 6)
-            .attr("dy", "0.71em")
-            .attr("text-anchor", "end")
-            .text("LoanCount");
 
-        g.selectAll(".bar")
-        .data(data)
-        .enter().append("rect")
-            .attr("class", "bar")
-            .attr("x", function(d) { return x(d.Book); })
-            .attr("y", function(d) { return y(d.LoanCount); })
-            .attr("width", x.bandwidth())
-            .attr("height", function(d) { return height - y(d.LoanCount); });
-    }
-});
-})()
+        $.ajax({
+            url: "getNumberOfCustomerLoans", success: function (result) {
+                var data = JSON.parse(result);
+
+                x.domain(data.map(function (d) { return d.Customer; }));
+                y.domain([0, d3.max(data, function (d) { return d.LoanCount; })]);
+
+                g.append("g")
+                    .attr("class", "axis axis--x")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(d3.axisBottom(x));
+
+                g.append("g")
+                    .attr("class", "axis axis--y")
+                    .call(d3.axisLeft(y).tickValues(d3.range(0, 10, 1)))
+                    .append("text")
+                    .attr("transform", "rotate(-90)")
+                    .attr("y", 6)
+                    .attr("dy", "0.71em")
+                    .attr("text-anchor", "end")
+                    .text("LoanCount");
+
+                g.selectAll(".bar2")
+                    .data(data)
+                    .enter().append("rect")
+                    .attr("class", "bar2")
+                    .attr("x", function (d) { return x(d.Customer); })
+                    .attr("y", function (d) { return y(d.LoanCount); })
+                    .attr("width", x.bandwidth())
+                    .attr("height", function (d) { return height - y(d.LoanCount); });
+
+
+            }
+        });
+    })()
 </script>

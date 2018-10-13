@@ -14,31 +14,34 @@
 
 @using (Html.BeginForm())
 {
-    @Html.AntiForgeryToken()
+
+    <h4 class="center">Statistics Admin Page - Login</h4>
+    <hr />
 
     <div class="form-horizontal">
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Username, "Username", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+
+        <div style="margin-bottom:10px">
+            @Html.LabelFor(model => model.Username, htmlAttributes: new { @style = "margin-bottom:5px" })
+            <div>
+                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", @style = "width:300px" } })
                 @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Password, "Password", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
+        <div style="margin-bottom:10px">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @style = "margin-bottom:5px" })
+            <div>
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @style = "width:300px", @type = "password" } })
                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Login" class="btn btn-default" />
-            </div>
+        <div>
+            <input type="submit" value="Login" class="btn btn-success" style="width:100%;margin-top:10px" />
         </div>
+
     </div>
 }
 
