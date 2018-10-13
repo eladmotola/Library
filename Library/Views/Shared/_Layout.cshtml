@@ -10,7 +10,6 @@
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Styles.Render("~/Content/home.css")
-    @Styles.Render("~/Content/fbcss.css")
 </head>
 <body>
     <div class="Wrapper">
@@ -18,7 +17,7 @@
             <aside class="PageLogo"></aside>
             <nav class="mynavbar">
                 @Html.ActionLink("Home", "Index", "Home")
-                @Html.ActionLink("Books archive", "Index", "Books")
+                @Html.ActionLink("Books", "Index", "Books")
                 @Html.ActionLink("Customers", "Index", "Customers")
                 @Html.ActionLink("Loan records", "Index", "Loans")
                 @Html.ActionLink("Branches", "Index", "Branches")
@@ -28,7 +27,12 @@
         <div class="myContainer body-content">
             @RenderBody()
         </div>
-
+        <a class="twitter-share-button"
+           href="https://twitter.com/intent/tweet?text=Hello%20world"
+           data-size="large">
+            Tweet
+        </a>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
         <footer>
             <p style="margin-top:15px"> @DateTime.Now.Year - Chen's Library</p>
         </footer>
