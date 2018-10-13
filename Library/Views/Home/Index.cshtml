@@ -5,17 +5,35 @@
 <script type="text/javascript" src="https://www.google.com/books/jsapi.js"></script>
 
 <br /><br />
-<section id="VideoSection">
-    <video width="640" height="360" id="player1" controls>
-        <source src="~/Content/video/vid.mp4" type="video/mp4" />
-    </video>
-</section>
-<br /><br />
-<section id="RecommendedBook">
-    <p>Recommended book of the month</p>
-    <div id="viewerCanvas" style="width: 700px; height: 700px"></div>
-</section>
+<div id="home">
+    <section>
+        <h2>
+            Chen's Library
+        </h2>
+        <p id="library-description">
+            In our library, you can find all the books that you want to read and
+            even more!!
+            Check out the books section for more details and start your amazing experience
 
+        </p>
+    </section>
+    <hr />
+    <section>
+        <h2>
+            Why its so fun with us
+        </h2>
+        <video width="640" height="360" id="player1" controls>
+            <source src="~/Content/video/vid.mp4" type="video/mp4" />
+        </video>
+    </section>
+    <hr />
+    <section>
+        <h2>
+            Recommnded book of the month
+        </h2>
+        <div id="viewerCanvas" style="width: 700px; height: 700px"></div>
+    </section>
+</div>
 <script type="text/javascript">
     google.books.load();
 
