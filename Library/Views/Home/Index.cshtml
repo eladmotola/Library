@@ -4,11 +4,6 @@
 
 <script type="text/javascript" src="https://www.google.com/books/jsapi.js"></script>
 
-@*<div class="FBLoginButton">
-        Login!
-    </div>*@
-
-<section id="FBPosts"></section>
 <br /><br />
 <section id="VideoSection">
     <video width="640" height="360" id="player1" controls>
@@ -30,17 +25,4 @@
     }
 
     google.books.setOnLoadCallback(initialize);
-
-    (function () {
-        $(".FBLoginButton").click(function () {
-            FB.getLoginStatus(function (response) {
-                if (response.status != 'connected') {
-                    FB.login();
-                }
-                else {
-                    alert("Conntected");
-                }
-            });
-        });
-    })();
 </script>
