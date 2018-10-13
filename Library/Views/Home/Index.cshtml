@@ -28,6 +28,11 @@
     </section>
     <hr />
     <section>
+        <h2>An insight pick</h2>
+        <canvas id="picture" width="640" height="360"></canvas>
+    </section>
+    <hr />
+    <section>
         <h2>
             Recommnded book of the month
         </h2>
@@ -43,4 +48,15 @@
     }
 
     google.books.setOnLoadCallback(initialize);
+</script>
+
+<script type="text/javascript">
+    var canvas = document.getElementById('picture');
+    var context = canvas.getContext('2d');
+    var img = new Image();
+    img.onload = function () {
+        context.drawImage(img, 0, 0); // Or at whatever offset you like
+    };
+    img.src = 'http://www.library.frontofyonge.com/library/cache/file/454FA37B-0ED5-520A-E3C55DE6684FAB95_carouselimages.jpg';
+
 </script>
