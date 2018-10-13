@@ -13,62 +13,6 @@
     @Styles.Render("~/Content/fbcss.css")
 </head>
 <body>
-    <script>
-        window.fbAsyncInit = function() {
-            FB.init({
-                appId      : '927435187404698',
-                cookie     : true,
-                xfbml      : true,
-                version    : 'v2.1'
-            });
-
-            FB.AppEvents.logPageView();
-            var at = "EAANLf1Tlv5oBANHpjDVfr3miYfk1E3HB4uu0MHGqwTeOPSVYTLTZBEm7aHWGFrYbHpe16qJFc9swDmuQZAZBmkQbXYLEM6fCosbMbhYnx8XUuOGh7ueFZBVLyLvR7VeS6Pzbn9D4qFcmBU4sehT7AhCe79xNDtLyjBXrj2SCHAZDZD";
-            var postDefer = $.Deferred();
-
-            FB.api("/1955781474695191/feed?access_token=" + at,
-                function (response) {
-                    if (response && !response.error) {
-                        window.postData = response.data;
-
-                        for (var i = 0; i < response.data.length; i++) {
-                            $("#FBPosts").append("<div class='FBPost' id='" + response.data[i].id + "'>" + response.data[i].message + "<div class='CommentsSection'></div></div>");
-
-                            FB.api("/" + response.data[i].id + "/comments?access_token=" + at,
-                                function (res) {
-                                    if (res.data.length) {
-                                        for (var j = 0; j < res.data.length; j++) {
-                                            var id = "#" + res.data[j].from.id + "_" + res.data[j].id.split("_")[0] + " .CommentsSection";
-                                            var fromSection = "<div class='CommentAuthor'>" + res.data[j].from.name + "</div>";
-                                            var messageSection = "<div class='CommentMessage'>" + res.data[j].message + "</div>";
-                                            var Comment = "<div class='SingleComment'>" + fromSection + messageSection + "</div>";
-
-                                            $(id).append(Comment);
-                                        }
-                                    }
-                                });
-
-                        }
-
-                        postDefer.resolve();
-                    }
-                });
-
-            $.when(postDefer).then(function (res) {
-                for (var i = 0; i < window.postData.length; i++) {
-                }
-            });
-        };
-
-
-        (function(d, s, id){
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {return;}
-            js = d.createElement(s); js.id = id;
-            js.src = "https://connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-    </script>
     <div class="Wrapper">
         <header class="Header">
             <aside class="PageLogo"></aside>

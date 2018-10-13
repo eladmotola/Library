@@ -30,6 +30,12 @@ namespace Library.Migrations
             //addGenre.Name = "Horror";
             //context.Genres.Add(addGenre);
 
+            context.Users.AddOrUpdate(new Models.User()
+            {
+                Username = "admin",
+                Password = "1234"
+            });
+
             context.Branches.AddOrUpdate(new Models.Branch()
             {
                 Id = 1,
