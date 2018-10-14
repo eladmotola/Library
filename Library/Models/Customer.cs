@@ -32,6 +32,8 @@ namespace Library.Models
         public string Gender { get; set; }
         [Required]
         [Display(Name = "Birthday")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Birthday { get; set; }
     }
 }

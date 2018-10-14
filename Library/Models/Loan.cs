@@ -12,9 +12,13 @@ namespace Library.Models
         public int CustomerId { get; set; }
         [Required]
         [Display(Name = "Loan Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime LoanDate { get; set; }
         [Required]
         [Display(Name = "Return Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime ReturnDate { get; set; }
         [ForeignKey("BookId")]
         [Display(Name = "Book Name")]
