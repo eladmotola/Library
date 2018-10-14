@@ -19,21 +19,22 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div style="margin-bottom:10px">
-            @Html.LabelFor(model => model.Book.Name, htmlAttributes: new { @style = "margin-bottom:5px" })
+            @Html.LabelFor(model => model.Customer.PersonalID, htmlAttributes: new { @style = "margin-bottom:5px" })
             <div>
-                @Html.DropDownList("BookId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Book.Name, "", new { @class = "text-danger" })
+                @Html.DropDownList("CustomerId", null, htmlAttributes: new { @class = "form-control", @id="CustomerId", @onchange= "getRecommendedBook()" })
+                @Html.ValidationMessageFor(model => model.Customer.PersonalID, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div style="margin-bottom:10px">
-            @Html.LabelFor(model => model.Customer.PersonalID, htmlAttributes: new { @style = "margin-bottom:5px" })
+            @Html.LabelFor(model => model.Book.Name, htmlAttributes: new { @style = "margin-bottom:5px" })
             <div>
-                @Html.DropDownList("CustomerId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Customer.PersonalID, "", new { @class = "text-danger" })
+                @Html.DropDownList("BookId", null, htmlAttributes: new { @class = "form-control", @id = "BookId" })
+                @Html.ValidationMessageFor(model => model.Book.Name, "", new { @class = "text-danger" })
             </div>
+            <span id="rec" style="color:darkred"></span>
         </div>
-        
+
         <div style="margin-bottom:10px">
             @Html.LabelFor(model => model.LoanDate, "Loan Date", htmlAttributes: new { @style = "margin-bottom:5px" })
             <div>
@@ -55,6 +56,33 @@
     </div>
 }
 
+<script>
+    function getRecommendedBook() {
+        var customers = document.getElementById('CustomerId');
+        var custId = customers.options[customers.selectedIndex].text;
+        $.ajax({
+            url: 'getRecommendedBook/?CustomerId=' + custId,
+            success: function (data) {
+                if (data !== "There is no recommended book for this customer.") {
+                    var books = document.getElementById('BookId');
+                    var selectedIndex = -1;
+                    for (var i = 0; i < books.options.length; i++) {
+                        if (books.options[i].text === data) {
+                            books.selectedIndex = i;
+                            break;
+                        }
+                    }
+                    document.getElementById("rec").innerHTML = "The recommended book is already chosen"
+                } else {
+                    document.getElementById("rec").innerHTML = "No recommendations for this cutomer"
+                }
+            }
+        });
+    }
+
+    getRecommendedBook();
+
+</script>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

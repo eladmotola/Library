@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Accord.MachineLearning.Rules;
 using Library.Models;
 
 namespace Library.Controllers
@@ -13,6 +14,38 @@ namespace Library.Controllers
     public class LoansController : Controller
     {
         private LibraryContext db = new LibraryContext();
+
+        public string getRecommendedBook(string CustomerId)
+        {
+            if (CustomerId == null) return "error - must have CustomerId";
+
+            var allLoans = db.Loans.Include(l => l.Book).Include(l => l.Customer).ToList();
+            var customers = db.Customers.ToList();
+
+            List<int[]> tempDataset = new List<int[]>();
+            foreach (var c in customers)
+            {
+                var booksPerC = allLoans.Where(x => x.CustomerId == c.Id).Select(b => b.BookId).ToList();
+                tempDataset.Add(booksPerC.ToArray());
+            }
+
+            int[][] dataset = tempDataset.ToArray();
+            Apriori apriori = new Apriori(threshold: 1, confidence: 0);
+            AssociationRuleMatcher<int> classifier = apriori.Learn(dataset);
+
+            var booksPerSpecC = allLoans.Where(x => x.Customer.PersonalID == (string)CustomerId).Select(b => b.BookId).ToArray();
+
+            int[][] matches = classifier.Decide(booksPerSpecC);
+
+            if (matches.Length > 0)
+            {
+                int BestBookID = matches[0][0];
+                string BestBookName = db.Books.Single(x=>x.Id==BestBookID).Name;
+                return BestBookName;
+            }
+
+            return "There is no recommended book for this customer.";
+        }
 
         // GET: Loans
         public ActionResult Index()

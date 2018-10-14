@@ -8,18 +8,24 @@ namespace Library.Models
     {
         [Key]
         public int Id { get; set; }
+
         [Display(Name = "Book Name")]
         [Required]
         public string Name { get; set; }
+
         [Required]
         public string Author { get; set; }
+
         [Display(Name = "Release Date")]
         [Required]
         public DateTime ReleaseDate { get; set; }
+
         [Required]
         [Display(Name = "Genre")]
         public int GenreId { get; set; }
+
         [ForeignKey("GenreId")]
         public Genre Genre { get; set; }
+        
     }
 }

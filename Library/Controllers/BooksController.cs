@@ -6,6 +6,8 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Accord.MachineLearning.Rules;
+using Accord.Statistics.Analysis;
 using Library.Models;
 
 namespace Library.Controllers

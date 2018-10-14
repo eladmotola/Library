@@ -11,6 +11,7 @@ namespace Library.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(Library.Models.LibraryContext context)
