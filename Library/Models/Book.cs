@@ -15,6 +15,8 @@ namespace Library.Models
         public string Author { get; set; }
         [Display(Name = "Release Date")]
         [Required]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime ReleaseDate { get; set; }
         [Required]
         [Display(Name = "Genre")]
