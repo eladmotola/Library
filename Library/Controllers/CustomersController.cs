@@ -82,10 +82,14 @@ namespace Library.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(customer).State = EntityState.Modified;
-                db.SaveChanges();
+                if (db.Customers.SingleOrDefault(x => x.Id == customer.Id) != null)
+                {
+                    db.Entry(customer).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
                 return RedirectToAction("Index");
             }
+
             return View(customer);
         }
 

@@ -3,27 +3,19 @@
     display: grid;
 }
 
-.FormContent {
-    width: max-content;
-    margin: 0 auto;
-    text-align:center;
+.dl-horizontal {
+    font-size:15px;
 }
 
-.FormContent .form-actions  {
-    display:flex;
-    justify-content:space-between;
-    align-items: center;
-    margin-top: 15px;
-}
+    .dl-horizontal dt {
+        margin-top: 10px;
+        text-align: left;
+    }
 
-.dl-horizontal dt {
-    margin-top: 5px;
-    text-align: left;
-}
-
-.dl-horizontal dd {
-    text-align: right;
-}
+    .dl-horizontal dd {
+        margin-top: 10px;
+        text-align: right;
+    }
 
 h4 {
     font-size: 24pt;
