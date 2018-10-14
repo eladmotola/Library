@@ -113,7 +113,7 @@ namespace Library.Controllers
             Loan loan = db.Loans.Find(BookId, CustomerId);
             if (loan == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
             ViewBag.BookId = new SelectList(db.Books, "Id", "Name", loan.BookId);
             ViewBag.CustomerId = new SelectList(db.Customers, "Id", "FirstName", loan.CustomerId);
@@ -152,7 +152,7 @@ namespace Library.Controllers
             Loan loan = db.Loans.Find(BookId, CustomerId);
             if (loan == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
             return View(loan);
         }

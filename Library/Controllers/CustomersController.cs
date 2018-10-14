@@ -68,7 +68,7 @@ namespace Library.Controllers
             Customer customer = db.Customers.Find(id);
             if (customer == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
             return View(customer);
         }
@@ -103,7 +103,7 @@ namespace Library.Controllers
             Customer customer = db.Customers.Find(id);
             if (customer == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
             return View(customer);
         }

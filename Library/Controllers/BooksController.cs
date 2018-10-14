@@ -80,7 +80,7 @@ namespace Library.Controllers
             Book book = db.Books.Find(id);
             if (book == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
             ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", book.GenreId);
             return View(book);
@@ -117,7 +117,7 @@ namespace Library.Controllers
             Book book = db.Books.Where(x => x.Id == id).Include(x => x.Genre).FirstOrDefault();
             if (book == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
             return View(book);
         }

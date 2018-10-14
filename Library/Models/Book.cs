@@ -27,7 +27,7 @@ namespace Library.Models
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (!General.Validator.IsOnlyLetters(Author))
+            if (!General.Validator.IsOnlyLetters(Author.Replace(" ", "")))
             {
                 yield return
                   new ValidationResult(errorMessage: "Author contains only letters",
