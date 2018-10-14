@@ -153,12 +153,12 @@ namespace Library.Controllers
 
             if (BookName != string.Empty)
             {
-                books = books.Where(book => book.Name == BookName);
+                books = books.Where(book => book.Name.Contains(BookName));
             }
 
             if (Author != string.Empty)
             {
-                books = books.Where(book => book.Author == Author);
+                books = books.Where(book => book.Author.Contains(Author));
             }
 
             if (GenreId != string.Empty)
