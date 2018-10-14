@@ -129,7 +129,7 @@ namespace Library.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (db.Loans.SingleOrDefault(x => x.CustomerId == loan.CustomerId && x.BookId == loan.BookId) != null)
+                if (db.Loans.AsNoTracking().SingleOrDefault(x => x.CustomerId == loan.CustomerId && x.BookId == loan.BookId) != null)
                 {
                     db.Entry(loan).State = EntityState.Modified;
                     db.SaveChanges();

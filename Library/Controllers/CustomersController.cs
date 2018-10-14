@@ -82,7 +82,7 @@ namespace Library.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (db.Customers.SingleOrDefault(x => x.Id == customer.Id) != null)
+                if (db.Customers.AsNoTracking().SingleOrDefault(x => x.Id == customer.Id) != null)
                 {
                     db.Entry(customer).State = EntityState.Modified;
                     db.SaveChanges();

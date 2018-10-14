@@ -95,7 +95,7 @@ namespace Library.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (db.Books.SingleOrDefault(x => x.Id == book.Id) != null)
+                if (db.Books.AsNoTracking().SingleOrDefault(x => x.Id == book.Id) != null)
                 {
                     db.Entry(book).State = EntityState.Modified;
                     db.SaveChanges();
