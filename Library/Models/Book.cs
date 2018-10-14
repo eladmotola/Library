@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.RegularExpressions;
 
 namespace Library.Models
 {
@@ -28,12 +27,13 @@ namespace Library.Models
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (Regex.Matches(Author, @"[a-zA-Z]").Count != Author.Length)
+            if (!General.Validator.IsOnlyLetters(Author))
             {
                 yield return
                   new ValidationResult(errorMessage: "Author contains only letters",
                                        memberNames: new[] { "Author" });
             }
         }
+        
     }
 }

@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Library.Models
 {
-    public class Customer
+    public class Customer : IValidatableObject
     {
         [Key]
         [Display(Name = "Id")]
@@ -35,5 +36,44 @@ namespace Library.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Birthday { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (!General.Validator.IsOnlyLetters(FirstName))
+            {
+                yield return
+                  new ValidationResult(errorMessage: "First Name contains only letters",
+                                       memberNames: new[] { "FirstName" });
+            }
+
+            if (!General.Validator.IsOnlyLetters(FamilyName))
+            {
+                yield return
+                  new ValidationResult(errorMessage: "Family Name contains only letters",
+                                       memberNames: new[] { "FamilyName" });
+            }
+
+            if (!General.Validator.IsOnlyNumbers(PersonalID))
+            {
+                yield return
+                  new ValidationResult(errorMessage: "Personal ID contains only numbers",
+                                       memberNames: new[] { "PersonalID" });
+            }
+
+            if (!General.Validator.IsOnlyNumbers(PhoneNumber))
+            {
+                yield return
+                  new ValidationResult(errorMessage: "Phone Number contains only numbers",
+                                       memberNames: new[] { "PhoneNumber" });
+            }
+
+            if (!General.Validator.IsValidGender(Gender))
+            {
+                yield return
+                  new ValidationResult(errorMessage: "Gender value can be M or F",
+                                       memberNames: new[] { "Gender" });
+            }
+
+        }
     }
 }
