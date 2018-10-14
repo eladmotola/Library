@@ -93,10 +93,14 @@ namespace Library.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(book).State = EntityState.Modified;
-                db.SaveChanges();
+                if (db.Books.SingleOrDefault(x => x.Id == book.Id) != null)
+                {
+                    db.Entry(book).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
                 return RedirectToAction("Index");
             }
+
             ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", book.GenreId);
             return View(book);
         }
