@@ -271,6 +271,10 @@
     <Content Include="Views\Branches\Index.cshtml" />
     <Content Include="Views\Statistics\Index.cshtml" />
     <Content Include="Views\Statistics\Login.cshtml" />
+    <Content Include="Views\Loans\Login.cshtml" />
+    <Content Include="Views\Customers\Login.cshtml" />
+    <Content Include="Views\Books\Login.cshtml" />
+    <Content Include="Views\Statistics\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

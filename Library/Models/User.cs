@@ -8,5 +8,9 @@ namespace Library.Models
         public string Username { get; set; }
         [Required]
         public string Password { get; set; }
+
+        // RoleId: 1-manager, 2-Librarian
+        [Required]
+        public int RoleId { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 
 @{
     int? isLogged = System.Web.HttpContext.Current.Session["LoggedIn"] as int?;
-    if (isLogged.HasValue && isLogged.Value == 1)
+    if (isLogged.HasValue && (isLogged.Value == 1 || isLogged.Value == 2))
     {
         Response.Redirect("Index");
     }
@@ -15,7 +15,7 @@
 @using (Html.BeginForm())
 {
 
-    <h4 class="center">Statistics Admin Page - Login</h4>
+    <h4 class="center">Login</h4>
     <hr />
 
     <div class="form-horizontal">

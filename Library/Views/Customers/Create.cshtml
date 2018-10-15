@@ -1,14 +1,23 @@
 ﻿@model Library.Models.Customer
 
 @{
+    int? isLogged = System.Web.HttpContext.Current.Session["LoggedIn"] as int?;
+    if (!isLogged.HasValue ||
+        (isLogged.Value != 1 && isLogged.Value != 2))
+    {
+        Response.Redirect("Login");
+    }
+}
+
+@{
     ViewBag.Title = "Create";
 }
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-     <div>
+    <div>
         @Html.ActionLink(" Back", "Index", "", new { @class = "glyphicon glyphicon-chevron-left Icon" })
     </div>
     <h4>Add new customer</h4>

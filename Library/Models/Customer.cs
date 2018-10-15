@@ -53,17 +53,17 @@ namespace Library.Models
                                        memberNames: new[] { "FamilyName" });
             }
 
-            if (!General.Validator.IsOnlyNumbers(PersonalID))
+            if (!General.Validator.IsOnlyNumbers(PersonalID) || this.PersonalID.Length != 9)
             {
                 yield return
-                  new ValidationResult(errorMessage: "Personal ID contains only numbers",
+                  new ValidationResult(errorMessage: "Personal ID contains only 9 numbers",
                                        memberNames: new[] { "PersonalID" });
             }
 
-            if (!General.Validator.IsOnlyNumbers(PhoneNumber))
+            if (!General.Validator.IsOnlyNumbers(PhoneNumber) || this.PhoneNumber.Length != 10)
             {
                 yield return
-                  new ValidationResult(errorMessage: "Phone Number contains only numbers",
+                  new ValidationResult(errorMessage: "Phone Number contains only 10 numbers",
                                        memberNames: new[] { "PhoneNumber" });
             }
 
@@ -72,6 +72,13 @@ namespace Library.Models
                 yield return
                   new ValidationResult(errorMessage: "Gender value can be M or F",
                                        memberNames: new[] { "Gender" });
+            }
+
+            if (Birthday.Date > DateTime.Now.Date)
+            {
+                yield return
+                  new ValidationResult(errorMessage: "Date can not be greater than today's date",
+                                       memberNames: new[] { "Birthday" });
             }
 
         }

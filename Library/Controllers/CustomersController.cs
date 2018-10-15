@@ -35,6 +35,28 @@ namespace Library.Controllers
             return View(customer);
         }
 
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Login(string Username, string Password)
+        {
+            User authUser = db.Users.SingleOrDefault(user => user.Username == Username &&
+                                                     user.Password == Password);
+
+            if (authUser != null)
+            {
+                System.Web.HttpContext.Current.Session["LoggedIn"] = authUser.RoleId;
+                return RedirectToAction("/Index");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
         // GET: Customers/Create
         public ActionResult Create()
         {
@@ -50,6 +72,10 @@ namespace Library.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (db.Customers.Where(x => x.PersonalID == customer.PersonalID).ToList().Count != 0)
+                {
+                    return View();
+                }
                 db.Customers.Add(customer);
                 db.SaveChanges();
                 return RedirectToAction("Index");

@@ -1,12 +1,22 @@
 ﻿@model Library.Models.Book
 
 @{
+    int? isLogged = System.Web.HttpContext.Current.Session["LoggedIn"] as int?;
+    if (!isLogged.HasValue ||
+        (isLogged.Value != 1 && isLogged.Value != 2))
+    {
+        Response.Redirect("Login");
+    }
+}
+
+@{
     ViewBag.Title = "Create";
 }
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+
 
     <div>
         @Html.ActionLink(" Back", "Index", "", new { @class = "glyphicon glyphicon-chevron-left Icon" })

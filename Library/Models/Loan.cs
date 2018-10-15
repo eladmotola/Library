@@ -37,6 +37,13 @@ namespace Library.Models
                   new ValidationResult(errorMessage: "Return Date must be greater than Loan Date",
                                        memberNames: new[] { "ReturnDate" });
             }
+
+            if (LoanDate.Date > DateTime.Now.Date)
+            {
+                yield return
+                  new ValidationResult(errorMessage: "Date can not be greater than today's date",
+                                       memberNames: new[] { "LoanDate" });
+            }
         }
     }
 }

@@ -49,7 +49,15 @@ namespace Library.Migrations
             context.Users.AddOrUpdate(new Models.User()
             {
                 Username = "admin",
-                Password = "1234"
+                Password = "1234",
+                RoleId = 1
+            });
+
+            context.Users.AddOrUpdate(new Models.User()
+            {
+                Username = "lib",
+                Password = "1234",
+                RoleId = 2
             });
 
             context.Branches.AddOrUpdate(new Models.Branch()

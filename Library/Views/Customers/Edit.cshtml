@@ -1,6 +1,15 @@
 ﻿@model Library.Models.Customer
 
 @{
+    int? isLogged = System.Web.HttpContext.Current.Session["LoggedIn"] as int?;
+    if (!isLogged.HasValue ||
+        (isLogged.Value != 1 && isLogged.Value != 2))
+    {
+        Response.Redirect("Login");
+    }
+}
+
+@{
     ViewBag.Title = "Edit";
 }
 

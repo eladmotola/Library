@@ -1,13 +1,22 @@
 ﻿@model Library.Models.Loan
 
 @{
+    int? isLogged = System.Web.HttpContext.Current.Session["LoggedIn"] as int?;
+    if (!isLogged.HasValue ||
+        (isLogged.Value != 1 && isLogged.Value != 2))
+    {
+        Response.Redirect("Login");
+    }
+}
+
+@{
     ViewBag.Title = "Edit";
 }
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div>
         @Html.ActionLink(" Back", "Index", "", new { @class = "glyphicon glyphicon-chevron-left Icon" })
     </div>

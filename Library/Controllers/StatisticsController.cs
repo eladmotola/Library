@@ -29,17 +29,47 @@ namespace Library.Controllers
         [HttpPost]
         public ActionResult Login(string Username, string Password)
         {
-            User authUser = db.Users.SingleOrDefault(user => user.Username == Username && user.Password == Password);
+            User authUser = db.Users.SingleOrDefault(user => user.Username == Username && 
+                                                     user.Password == Password && 
+                                                     user.RoleId == 1);
 
             if (authUser != null)
             {
-                System.Web.HttpContext.Current.Session["LoggedIn"] = true;
+                System.Web.HttpContext.Current.Session["LoggedIn"] = authUser.RoleId;
                 return RedirectToAction("/Index");
             }
             else
             {
                 return View();
             }
+        }
+
+        // GET: Statistics/Create
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Statistics/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "Username,Password")] User user)
+        {
+            if (ModelState.IsValid)
+            {
+                if (db.Users.Where(u => u.Username == user.Username).ToList().Count > 0)
+                {
+                    return View("Create");
+                }
+                user.RoleId = 2;
+                db.Users.Add(user);
+                db.SaveChanges();
+                return RedirectToAction("/Index");
+            }
+
+            return View("Create");
         }
 
         public string getNumberOfBookLoans()

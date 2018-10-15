@@ -33,6 +33,13 @@ namespace Library.Models
                   new ValidationResult(errorMessage: "Author contains only letters",
                                        memberNames: new[] { "Author" });
             }
+
+            if (ReleaseDate.Date > DateTime.Now.Date)
+            {
+                yield return
+                  new ValidationResult(errorMessage: "Date can not be greater than today's date",
+                                       memberNames: new[] { "ReleaseDate" });
+            }
         }
         
     }

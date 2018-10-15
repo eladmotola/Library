@@ -30,6 +30,28 @@ namespace Library.Controllers
             return View(db.Books.Include(b => b.Genre).ToList());
         }
 
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Login(string Username, string Password)
+        {
+            User authUser = db.Users.SingleOrDefault(user => user.Username == Username &&
+                                                     user.Password == Password);
+
+            if (authUser != null)
+            {
+                System.Web.HttpContext.Current.Session["LoggedIn"] = authUser.RoleId;
+                return RedirectToAction("/Index");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
         // GET: Books/Details/5
         public ActionResult Details(int? id)
         {

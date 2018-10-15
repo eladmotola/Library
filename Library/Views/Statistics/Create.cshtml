@@ -1,21 +1,17 @@
 ﻿@model Library.Models.User
 
 @{
-    int? isLogged = System.Web.HttpContext.Current.Session["LoggedIn"] as int?;
-    if (isLogged.HasValue && isLogged.Value == 1)
-    {
-        Response.Redirect("Index");
-    }
-}
-
-@{
-    ViewBag.Title = "Login";
+    ViewBag.Title = "Create";
 }
 
 @using (Html.BeginForm())
 {
+    @Html.AntiForgeryToken()
 
-    <h4 class="center">Statistics Admin Page - Login</h4>
+    <div>
+        @Html.ActionLink(" Back", "Index", "", new { @class = "glyphicon glyphicon-chevron-left Icon" })
+    </div>
+    <h4>Add new librarian</h4>
     <hr />
 
     <div class="form-horizontal">
@@ -31,17 +27,16 @@
         </div>
 
         <div style="margin-bottom:10px">
-            @Html.LabelFor(model => model.Password, htmlAttributes: new { @style = "margin-bottom:5px" })
+            @Html.LabelFor(model => model.Password, "Password", htmlAttributes: new { @style = "margin-bottom:5px" })
             <div>
-                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @style = "width:300px", @type = "password" } })
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @style = "width:300px" } })
                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div>
-            <input type="submit" value="Login" class="btn btn-success" style="width:100%;margin-top:10px" />
+            <input type="submit" value="Add" class="btn btn-success" style="width:100%;margin-top:10px" />
         </div>
-
     </div>
 }
 

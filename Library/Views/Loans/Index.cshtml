@@ -1,6 +1,15 @@
 ﻿@model IEnumerable<Library.Models.Loan>
 
 @{
+    int? isLogged = System.Web.HttpContext.Current.Session["LoggedIn"] as int?;
+    if (!isLogged.HasValue || 
+        (isLogged.Value != 1 && isLogged.Value != 2))
+    {
+        Response.Redirect("Login");
+    }
+}
+
+@{
     ViewBag.Title = "Loans";
 }
 
@@ -37,7 +46,7 @@
             <td class="center">
                 @Html.DisplayFor(modelItem => item.ReturnDate)
             </td>
-            
+
             <td class="center">
                 @Html.ActionLink(" ", "Edit", new { BookId = item.BookId, CustomerId = item.CustomerId }, new { @class = "glyphicon glyphicon-pencil Icon" })
                 @Html.ActionLink(" ", "Delete", new { BookId = item.BookId, CustomerId = item.CustomerId }, new { @class = "glyphicon glyphicon-trash Icon" })
